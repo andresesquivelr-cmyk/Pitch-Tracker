@@ -73,21 +73,7 @@ export default function App() {
     delete axios.defaults.headers.common['Authorization']
   }
 
-  // Show nothing while checking session (avoids flash of login screen)
-  if (session === undefined) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-950">
-        <div className="text-gray-500 text-sm">Loading…</div>
-      </div>
-    )
-  }
-
-  // Not signed in — show login screen
-  if (!session) {
-    return <Login onLogin={handleLogin} />
-  }
-
-  // ── App state ─────────────────────────────────────────────────────────────
+  // ── App state (ALL hooks must be before any early returns) ──────────────────
   const [screen, setScreen]           = useState('start')
   const [outing, setOuting]           = useState(null)
   const [pitcherName, setPitcherName] = useState('')
@@ -128,6 +114,20 @@ export default function App() {
       axios.get(`${API}/outings`).then(r => setPastOutings(r.data.outings || [])).catch(() => {})
     }
   }, [screen])
+
+  // Show nothing while checking session (avoids flash of login screen)
+  if (session === undefined) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-950">
+        <div className="text-gray-500 text-sm">Loading…</div>
+      </div>
+    )
+  }
+
+  // Not signed in — show login screen
+  if (!session) {
+    return <Login onLogin={handleLogin} />
+  }
 
   const startOuting = async () => {
     if (!pitcherName.trim()) { setError('Enter a pitcher name'); return }
