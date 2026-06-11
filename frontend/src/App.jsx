@@ -12,7 +12,7 @@ import TrendView from './components/TrendView'
 import TrackManSummary from './components/TrackManSummary'
 import { supabase } from './supabase'
 
-const API = import.meta.env.VITE_API_URL || '/api'
+const API = import.meta.env.VITE_API_URL || 'https://pitch-tracker-production-e340.up.railway.app'
 
 const PITCH_TYPES = ['Fastball', 'Two-Seam', 'Cutter', 'Slider', 'Curveball', 'Changeup', 'Sinker', 'Splitter']
 const RESULTS     = ['Strike', 'Called Strike', 'Swinging Strike', 'Ball', 'Foul', 'Hit', 'Out', 'HBP']
